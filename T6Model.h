@@ -132,7 +132,7 @@ private:
      * Sets all the bars speed to the given speed vector.
      * (muscles and markers are moved automatically since they are attached).
      */
-     void moveModel(btVector3 positionVector,btVector3 rotationVector,btVector3 speedVector);
+    void moveModel(btVector3 positionVector,btVector3 rotationVector,btVector3 speedVector);
 
 
 private:

@@ -79,19 +79,19 @@ namespace
    {
      4.5,    // density (kg / length^3)
      0.015875,     // radius (length)
-     90,   // stiffness of outer muscles (kg / sec^2)
+     9,   // stiffness of outer muscles (kg / sec^2 = N/m = .1N/dm)
      500.0,    // stiffness of inner muscles (kg/sec^2)
      3,    // damping of outer muscles (kg / sec)
      50.0,     //damping of inner muscles (kg/sec)
      2.667,     // rod_length (length)
      .824,      // rod_space (length) 2X THE DISTANCE
      0.5,         // half payload height (length)
-     .136078/17.567,        //payload density (kg/lenght^3)
+     .136078/17.567,        //payload density (kg/length^3)
      .6604/2,        //payload radius (length) // ACTUAL DIAMETER OF
      1.0,      // friction (unitless)
      0.1,     // rollFriction (unitless)
      0.0,      // restitution (?)
-     100.0,        // pretension (force)
+     100.0,        // pretension (N)
      false,     // history
      1000000,   // maxTens
      10000    // targetVelocity
@@ -269,7 +269,7 @@ void T6Model::setup(tgWorld& world)
 
     btVector3 location(0,0,0); // DONT CHANGE THIS. USE S.MOVE() to change initial location
     btVector3 rotation(0,0,0.0);
-  	btVector3 speed(0,-10,0);  // X*, Z, Y*
+  	btVector3 speed(0,-100,0);  // X*, Z, Y*
     this->moveModel(location,rotation,speed);
 
     // Actually setup the children
