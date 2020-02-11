@@ -37,6 +37,12 @@
 // The C++ Standard Library
 #include <vector>
 
+
+extern int stiffnessouter;
+extern int stiffnessinner;
+extern int pretensionouter;
+extern int pretensioninner;
+
 // Forward declarations
 class tgSpringCableActuator;
 class tgModelVisitor;
@@ -47,6 +53,9 @@ class tgWorld;
  * Class that creates the six strut "superball" model using tgcreator
  */
 class T6Model : public tgSubject<T6Model>, public tgModel
+
+// global vars
+
 {
 public:
 
@@ -99,7 +108,6 @@ public:
      * @return A vector of all of the muscles
      */
     const std::vector<tgSpringCableActuator*>& getAllMuscles() const;
-
 
 private:
 

@@ -36,9 +36,11 @@
 // Sensors
 #include "sensors/tgDataLogger2.h"
 #include "sensors/tgRodSensorInfo.h"
+#include "sensors/tgSphereSensorInfo.h"
 #include "sensors/tgSpringCableActuatorSensorInfo.h"
 // The C++ Standard Library
 #include <iostream>
+#include <string>
 
 /**
  * The entry point.
@@ -46,10 +48,17 @@
  * @param[in] argv argv[0] is the executable name
  * @return 0
  */
+
+int stiffnessouter = 45;  // stiffness of outer muscles (N/dm)
+int stiffnessinner = 200;  // stiffness of inner muscles (N/dm)
+int pretensionouter = 40; // pretension of outer muscles (N)
+int pretensioninner = 200; // pretension of inner muscles (N)
+
 int main(int argc, char** argv)
 {
     std::cout << "AppSUPERball" << std::endl;
 
+    // stiffnessbooga = 90;
     // First create the ground and world
 
     // Determine the angle of the ground in radians. All 0 is flat
@@ -60,7 +69,7 @@ int main(int argc, char** argv)
     // the world will delete this
     tgBoxGround* ground = new tgBoxGround(groundConfig);
 
-    const double titan_gravity = 13.52;
+    const double titan_gravity = 98.10;
     const tgWorld::Config config(titan_gravity); // gravity, cm/sec^2  Use this to adjust length scale of world.
         // Note, by changing the setting below from 981 to 98.1, we've
         // scaled the world length scale to decimeters not cm.
@@ -80,16 +89,23 @@ int main(int argc, char** argv)
 
     simulation.addModel(myModel);
 
-    std::string log_filename = "~/SIM2/NTRTsim_logs/data_logs";
-    double samplingTimeInterval = 0.1;
+
+    std::stringstream sstm;
+    sstm << "/media/sf_Shared_Tensegribuntu/adskjhfa/datalogs_" << stiffnessouter << "_" << stiffnessinner << "_" << pretensionouter << "_" << pretensioninner;
+    std::string log_filename = sstm.str();
+
+
+    double samplingTimeInterval = 0.001;
     tgDataLogger2* myDataLogger = new tgDataLogger2(log_filename, samplingTimeInterval);
 
     myDataLogger->addSenseable(myModel);
 
     tgRodSensorInfo* myRodSensorInfo = new tgRodSensorInfo();
+    tgSphereSensorInfo* mySphereSensorInfo = new tgSphereSensorInfo();
     tgSpringCableActuatorSensorInfo* mySCASensorInfo = new tgSpringCableActuatorSensorInfo();
     myDataLogger->addSensorInfo(myRodSensorInfo);
     myDataLogger->addSensorInfo(mySCASensorInfo);
+    myDataLogger->addSensorInfo(mySphereSensorInfo);
     simulation.addDataManager(myDataLogger);
 
     // Run until the user stops
