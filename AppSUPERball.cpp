@@ -49,11 +49,10 @@
  * @return 0
  */
 
-int stiffnessouter = 45;  // stiffness of outer muscles (N/dm)
-int stiffnessinner = 200;  // stiffness of inner muscles (N/dm)
+int stiffnessouter = 55;  // stiffness of outer muscles (N/dm)
+int stiffnessinner = 80;  // stiffness of inner muscles (N/dm)
 int pretensionouter = 40; // pretension of outer muscles (N)
-int pretensioninner = 200; // pretension of inner muscles (N)
-
+int pretensioninner = 55; // pretension of inner muscles (N)
 int main(int argc, char** argv)
 {
     std::cout << "AppSUPERball" << std::endl;
@@ -101,11 +100,11 @@ int main(int argc, char** argv)
     myDataLogger->addSenseable(myModel);
 
     tgRodSensorInfo* myRodSensorInfo = new tgRodSensorInfo();
-    tgSphereSensorInfo* mySphereSensorInfo = new tgSphereSensorInfo();
+    // tgSphereSensorInfo* mySphereSensorInfo = new tgSphereSensorInfo();
     tgSpringCableActuatorSensorInfo* mySCASensorInfo = new tgSpringCableActuatorSensorInfo();
     myDataLogger->addSensorInfo(myRodSensorInfo);
     myDataLogger->addSensorInfo(mySCASensorInfo);
-    myDataLogger->addSensorInfo(mySphereSensorInfo);
+    // myDataLogger->addSensorInfo(mySphereSensorInfo);
     simulation.addDataManager(myDataLogger);
 
     // Run until the user stops

@@ -39,6 +39,9 @@
 // The C++ Standard Library
 #include <stdexcept>
 #include <iostream>
+#include <math.h>
+
+#define PI 3.14159265359
 using std::cout;
 namespace
 {
@@ -120,81 +123,85 @@ void T6Model::addNodes(tgStructure& s)
     const double half_length = c.rod_length / 2;
 
     // Nodes for struts
-    // s.addNode(-c.rod_space,  -half_length, 0);            // 0
-    // s.addNode(-c.rod_space,   half_length, 0);            // 1
-    // s.addNode( c.rod_space,  -half_length, 0);            // 2
-    // s.addNode( c.rod_space,   half_length, 0);            // 3
-    // s.addNode(0,           -c.rod_space,   -half_length); // 4
-    // s.addNode(0,           -c.rod_space,    half_length); // 5
-    // s.addNode(0,            c.rod_space,   -half_length); // 6
-    // s.addNode(0,            c.rod_space,    half_length); // 7
-    // s.addNode(-half_length, 0,            c.rod_space);   // 8
-    // s.addNode( half_length, 0,            c.rod_space);   // 9
-    // s.addNode(-half_length, 0,           -c.rod_space);   // 10
-    // s.addNode( half_length, 0,           -c.rod_space);   // 11
+    // s.addNode(-1.567545294*cos((58.28713733 + 25)*PI/180),  -1.567545294*sin((58.28713733 + 25)*PI/180), 0);            // 0
+    // s.addNode(-1.567545294*cos((58.28713733 + 25)*PI/180),   1.567545294*sin((58.28713733 + 25)*PI/180), 0);           // 1
+    // s.addNode( 1.567545294*cos((58.28713733 + 25)*PI/180),  -1.567545294*sin((58.28713733 + 25)*PI/180), 0);            // 0
+    // s.addNode( 1.567545294*cos((58.28713733 + 25)*PI/180),   1.567545294*sin((58.28713733 + 25)*PI/180), 0);
+    s.addNode(-c.rod_space,    -half_length, 0); // 4
+    s.addNode(-c.rod_space,     half_length, 0); // 5
+    s.addNode( c.rod_space,    -half_length, 0); // 6
+    s.addNode( c.rod_space,     half_length, 0); // 7
+    s.addNode(0,           -c.rod_space,   -half_length); // 4
+    s.addNode(0,           -c.rod_space,    half_length); // 5
+    s.addNode(0,            c.rod_space,   -half_length); // 6
+    s.addNode(0,            c.rod_space,    half_length); // 7
+    s.addNode(-half_length, 0,            c.rod_space);   // 8
+    s.addNode( half_length, 0,            c.rod_space);   // 9
+    s.addNode(-half_length, 0,           -c.rod_space);   // 10
+    s.addNode( half_length, 0,           -c.rod_space);   // 11
            // 0
 
-    //Node for payload
-    s.addNode(0,0,0, "payload_sphere"); // 12
+    //Node SPHERE for payload
+    // s.addNode(0,0,0, "payload_sphere"); // 12
 
-    // s.addNode(0,  c.payload_h, 0);  // 12 cylinder payload
-    // s.addNode(0,  -c.payload_h, 0);   // 13 cylinder payload
+    s.addNode(0,  c.payload_h, 0);  // 12 cylinder payload
+    s.addNode(0,  -c.payload_h, 0);   // 13 cylinder payload
 }
 
 void T6Model::addRods(tgStructure& s)
 {
     // Struts
-    // s.addPair( 0,  1, "rod");
-    // s.addPair( 2,  3, "rod");
-    // s.addPair( 4,  5, "rod");
-    // s.addPair( 6,  7, "rod");
-    // s.addPair( 8,  9, "rod");
-    // s.addPair(10, 11, "rod");
+    s.addPair( 0,  1, "rod");
+    s.addPair( 2,  3, "rod");
+    s.addPair( 4,  5, "rod");
+    s.addPair( 6,  7, "rod");
+    s.addPair( 8,  9, "rod");
+    s.addPair(10, 11, "rod");
     // s.addPair( 13,  3, "rod");  // additional rods for testing what rodspace is. this one has length=rod_space
-    // s.addPair( 1,  3, "rod");  this one has length=2*rod_space
+    // s.addPair( 1,  3, "rod"); // this one has length=2*rod_space
 
     // Payload
-    // s.addPair(12, 13, "payload_rod");
+    s.addPair(12, 13, "payload_rod"); // FOR JUST CYL
 
 }
 
 void T6Model::addMuscles(tgStructure& s)
 {
     // Outer Cables
-    // s.addPair(0, 4,  "muscle");
-    // s.addPair(0, 5,  "muscle");
-    // s.addPair(0, 8,  "muscle");
-    // s.addPair(0, 10, "muscle");
-    //
-    // s.addPair(1, 6,  "muscle");
-    // s.addPair(1, 7,  "muscle");
-    // s.addPair(1, 8,  "muscle");
-    // s.addPair(1, 10, "muscle");
-    //
-    // s.addPair(2, 4,  "muscle");
-    // s.addPair(2, 5,  "muscle");
-    // s.addPair(2, 9,  "muscle");
-    // s.addPair(2, 11, "muscle");
-    //
-    // s.addPair(3, 7,  "muscle");
-    // s.addPair(3, 6,  "muscle");
-    // s.addPair(3, 9,  "muscle");
-    // s.addPair(3, 11, "muscle");
-    //
-    // s.addPair(4, 2,  "muscle");
-    // s.addPair(4, 10, "muscle");
-    // s.addPair(4, 11, "muscle");
-    //
-    // s.addPair(5, 8,  "muscle");
-    // s.addPair(5, 9,  "muscle");
-    //
-    // s.addPair(6, 10, "muscle");
-    // s.addPair(6, 11, "muscle");
-    //
-    // s.addPair(7, 8,  "muscle");
-    // s.addPair(7, 9,  "muscle");
-    //
-    // // Payload Muscles sphere
+    s.addPair(0, 4,  "muscle");
+    s.addPair(0, 5,  "muscle");
+    s.addPair(0, 8,  "muscle");
+    s.addPair(0, 10, "muscle");
+
+    s.addPair(1, 6,  "muscle");
+    s.addPair(1, 7,  "muscle");
+    s.addPair(1, 8,  "muscle");
+    s.addPair(1, 10, "muscle");
+
+    s.addPair(2, 4,  "muscle");
+    s.addPair(2, 5,  "muscle");
+    s.addPair(2, 9,  "muscle");
+    s.addPair(2, 11, "muscle");
+
+    s.addPair(3, 7,  "muscle");
+    s.addPair(3, 6,  "muscle");
+    s.addPair(3, 9,  "muscle");
+    s.addPair(3, 11, "muscle");
+
+    // s.addPair(4, 2,  "muscle"); // is this extra?
+    s.addPair(4, 10, "muscle");
+    s.addPair(4, 11, "muscle");
+
+    s.addPair(5, 8,  "muscle");
+    s.addPair(5, 9,  "muscle");
+
+    s.addPair(6, 10, "muscle");
+    s.addPair(6, 11, "muscle");
+
+    s.addPair(7, 8,  "muscle");
+    s.addPair(7, 9,  "muscle");
+
+    // Payload Muscles sphere
     // s.addPair(0, 12, "muscle_in");
     // s.addPair(1, 12, "muscle_in");
     // s.addPair(2, 12, "muscle_in");
@@ -209,18 +216,18 @@ void T6Model::addMuscles(tgStructure& s)
     // s.addPair(11, 12, "muscle_in");
 
     // Payload Muscles cylinder
-    // s.addPair(0, 13, "muscle_in");
-    // s.addPair(1, 12, "muscle_in");
-    // s.addPair(2, 13, "muscle_in");
-    // s.addPair(3, 12, "muscle_in");
-    // s.addPair(4, 13, "muscle_in");
-    // s.addPair(5, 12, "muscle_in");
-    // s.addPair(6, 13, "muscle_in");
-    // s.addPair(7, 12, "muscle_in");
-    // s.addPair(8, 13, "muscle_in");
-    // s.addPair(9, 12, "muscle_in");
-    // s.addPair(10, 13, "muscle_in");
-    // s.addPair(11, 12, "muscle_in");
+    s.addPair(0, 13, "muscle_in");
+    s.addPair(1, 12, "muscle_in");
+    s.addPair(2, 13, "muscle_in");
+    s.addPair(3, 12, "muscle_in");
+    s.addPair(4, 13, "muscle_in");
+    s.addPair(5, 12, "muscle_in");
+    s.addPair(6, 13, "muscle_in");
+    s.addPair(7, 12, "muscle_in");
+    s.addPair(8, 13, "muscle_in");
+    s.addPair(9, 12, "muscle_in");
+    s.addPair(10, 13, "muscle_in");
+    s.addPair(11, 12, "muscle_in");
 
 }
 
@@ -229,6 +236,9 @@ void T6Model::setup(tgWorld& world)
 
     const tgRod::Config rodConfig(c.radius, c.density, c.friction,
 				c.rollFriction, c.restitution);
+
+    const tgRod::Config payConfig(c.radius_pay, c.density_pay, c.friction,
+                c.rollFriction, c.restitution);
 
     const tgSphere::Config sphereConfig(c.radius_pay, c.density_pay, c.friction,
                 c.rollFriction, c.restitution);
@@ -252,7 +262,7 @@ void T6Model::setup(tgWorld& world)
     // Add a rotation to land the struture on a V.
     btVector3 rotationPoint1 = btVector3(0, 0, 0); // origin
     btVector3 rotationAxis1 = btVector3(0, 0, 0);  // x-axis
-    double rotationAngle1 = 0.0; //M_PI/2; 0.4636;
+    double rotationAngle1 = 0; //M_PI/2; 0.4636;
     s.addRotation(rotationPoint1, rotationAxis1, rotationAngle1);
     // Add a rotation to move structure towards triangle.
     btVector3 rotationPoint2 = btVector3(0, 0, 0); // origin
@@ -268,7 +278,7 @@ void T6Model::setup(tgWorld& world)
     // Create the build spec that uses tags to turn the structure into a real model
     tgBuildSpec spec;
     spec.addBuilder("rod", new tgRodInfo(rodConfig));
-    // spec.addBuilder("payload_sphere", new tgSphereInfo(payConfig));
+    spec.addBuilder("payload_rod", new tgRodInfo(payConfig));
     spec.addBuilder("payload_sphere", new tgSphereInfo(sphereConfig));
     spec.addBuilder("muscle", new tgBasicActuatorInfo(muscleConfig));
     spec.addBuilder("muscle_in", new tgBasicActuatorInfo(muscleInConfig));
