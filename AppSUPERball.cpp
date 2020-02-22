@@ -49,10 +49,10 @@
  * @return 0
  */
 
-int stiffnessouter = 55;  // stiffness of outer muscles (N/dm)
-int stiffnessinner = 80;  // stiffness of inner muscles (N/dm)
-int pretensionouter = 40; // pretension of outer muscles (N)
-int pretensioninner = 55; // pretension of inner muscles (N)
+int stiffnessouter = 25;  // stiffness of outer muscles (N/dm)
+int stiffnessinner = 50;  // stiffness of inner muscles (N/dm)
+int pretensionouter = 20; // pretension of outer muscles (N)
+int pretensioninner = 20; // pretension of inner muscles (N)
 int main(int argc, char** argv)
 {
     std::cout << "AppSUPERball" << std::endl;
