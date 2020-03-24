@@ -85,13 +85,13 @@ namespace
      0.015875,     // radius (length)
      stiffnessouter,   // stiffness of outer muscles (kg / sec^2 = N/m = .1N/dm)
      stiffnessinner,    // stiffness of inner muscles (kg/sec^2)
-     1,    // damping of outer muscles (kg / sec)
-     1,     //damping of inner muscles (kg/sec)
-     2.667,     // rod_length (length) THIS IS THE ACTUAL ROD LENGTH
-     .824,      // rod_space (length) THE ACTUAL SPACE IS 2X THE ENTERED VALUE
+     192,    // damping of outer muscles (kg / sec)
+     248,     //damping of inner muscles (kg/sec)
+     2.96418,     // rod_length (length) THIS IS THE ACTUAL ROD LENGTH
+     .635,      // rod_space (length) THE ACTUAL SPACE IS 2X THE ENTERED VALUE
 
      .3302,         // half payload height (length)
-     .601557,        //payload density (kg/length^3)
+     1.212205,        //payload density (kg/length^3)
      .3302,        //payload radius (length) // ACTUAL DIAMETER OF //.3302
 
      1.0,      // friction (unitless)
@@ -204,8 +204,8 @@ void T6Model::addMuscles(tgStructure& s)
     s.addPair(3, 6,  "muscle");
     s.addPair(3, 9,  "muscle");
     s.addPair(3, 11, "muscle");
-
-    // s.addPair(4, 2,  "muscle"); // is this extra?
+    //
+    // // s.addPair(4, 2,  "muscle"); // is this extra?
     s.addPair(4, 10, "muscle");
     s.addPair(4, 11, "muscle");
 
@@ -217,8 +217,8 @@ void T6Model::addMuscles(tgStructure& s)
 
     s.addPair(7, 8,  "muscle");
     s.addPair(7, 9,  "muscle");
-
-    // Payload Muscles sphere
+    //
+    // // Payload Muscles sphere
     s.addPair(0, 12, "muscle_in");
     s.addPair(1, 12, "muscle_in");
     s.addPair(2, 12, "muscle_in");
@@ -272,7 +272,7 @@ void T6Model::setup(tgWorld& world)
     addNodes(s);
     addRods(s);
     addMuscles(s);
-    s.move(btVector3(0, 100, 0));
+    s.move(btVector3(0, 50.7, 0));
 
 
 
