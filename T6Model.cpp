@@ -85,13 +85,13 @@ namespace
      0.015875,     // radius (length)
      stiffnessouter,   // stiffness of outer muscles (kg / sec^2 = N/m = .1N/dm)
      stiffnessinner,    // stiffness of inner muscles (kg/sec^2)
-     2,    // damping of outer muscles (kg / sec)
-     2,     //damping of inner muscles (kg/sec)
-     2.667,     // rod_length (length) THIS IS THE ACTUAL ROD LENGTH
-     .824,      // rod_space (length) THE ACTUAL SPACE IS 2X THE ENTERED VALUE
+     dampingouter,    // damping of outer muscles (kg / sec)
+     dampinginner,     //damping of inner muscles (kg/sec)
+     2.96418,     // rod_length (length) THIS IS THE ACTUAL ROD LENGTH
+     .635,      // rod_space (length) THE ACTUAL SPACE IS 2X THE ENTERED VALUE
 
      .3302,         // half payload height (length)
-     .601557,        //payload density (kg/length^3)
+     1.21220546,        //payload density (kg/length^3) (REMEMBER Cylinder .60155 Camera .90233, Camera AND Housing 1.21220546)
      .3302,        //payload radius (length) // ACTUAL DIAMETER OF //.3302
 
      1.0,      // friction (unitless)
@@ -123,10 +123,24 @@ void T6Model::addNodes(tgStructure& s)
     const double half_length = c.rod_length / 2;
 
     // Nodes for struts
-    // s.addNode(-1.567545294*cos((58.28713733 + 25)*PI/180),  -1.567545294*sin((58.28713733 + 25)*PI/180), 0);            // 0
-    // s.addNode(-1.567545294*cos((58.28713733 + 25)*PI/180),   1.567545294*sin((58.28713733 + 25)*PI/180), 0);           // 1
-    // s.addNode( 1.567545294*cos((58.28713733 + 25)*PI/180),  -1.567545294*sin((58.28713733 + 25)*PI/180), 0);            // 0
-    // s.addNode( 1.567545294*cos((58.28713733 + 25)*PI/180),   1.567545294*sin((58.28713733 + 25)*PI/180), 0);
+    //Nodes for Triangle
+    // s.addNode((-5.001*.254),  (-2.021*.254), (1.237*.254));    // 0
+    // s.addNode((3.572*.254),  (4.042*.254),  (1.237*.254));    // 1
+    // s.addNode((-3.572*.254),  (-4.042*.254), (-1.237*.254));   // 2
+    // s.addNode( (5.001*.254),   (2.021*.254), (-1.237*.254));   // 3
+    
+    // s.addNode((-3.572*.254), (2.021*.254), (-3.712*.254));   // 8
+    // s.addNode((.7144*.254), (-4.042*.254), (3.712*.254));   // 9
+    // s.addNode((-.7144*.254), (4.042*.254), (-3.712*.254));   // 10
+    // s.addNode((3.572*.254), (-2.021*.254),  (3.712*.254));   // 11
+    
+    
+    // s.addNode((-1.429*.254),  (2.021*.254),  (4.950*.254)); // 6
+    // s.addNode((2.858*.254),  (-4.042*.254),  (-2.475*.254)); // 7
+    // s.addNode((-2.858*.254),   (4.042*.254),  (2.475*.254)); // 4
+    // s.addNode((1.429*.254), (-2.021*.254),    (-4.950*.254)); // 5
+
+    //Nodes for rod impact
     s.addNode(-c.rod_space,    -half_length, 0); // 4
     s.addNode(-c.rod_space,     half_length, 0); // 5
     s.addNode( c.rod_space,    -half_length, 0); // 6
@@ -139,13 +153,13 @@ void T6Model::addNodes(tgStructure& s)
     s.addNode( half_length, 0,            c.rod_space);   // 9
     s.addNode(-half_length, 0,           -c.rod_space);   // 10
     s.addNode( half_length, 0,           -c.rod_space);   // 11
-           // 0
+    
 
     //Node SPHERE for payload
-    // s.addNode(0,0,0, "payload_sphere"); // 12
+    s.addNode(0,0,0, "payload_sphere"); // 12
 
-    s.addNode(0,  c.payload_h, 0);  // 12 cylinder payload
-    s.addNode(0,  -c.payload_h, 0);   // 13 cylinder payload
+    // s.addNode(0,  c.payload_h, 0);  // 12 cylinder payload
+    // s.addNode(0,  -c.payload_h, 0);   // 13 cylinder payload
 }
 
 void T6Model::addRods(tgStructure& s)
@@ -161,7 +175,7 @@ void T6Model::addRods(tgStructure& s)
     // s.addPair( 1,  3, "rod"); // this one has length=2*rod_space
 
     // Payload
-    s.addPair(12, 13, "payload_rod"); // FOR JUST CYL
+    //s.addPair(12, 13, "payload_rod"); // FOR JUST CYL
 
 }
 
@@ -202,32 +216,32 @@ void T6Model::addMuscles(tgStructure& s)
     s.addPair(7, 9,  "muscle");
 
     // Payload Muscles sphere
-    // s.addPair(0, 12, "muscle_in");
-    // s.addPair(1, 12, "muscle_in");
-    // s.addPair(2, 12, "muscle_in");
-    // s.addPair(3, 12, "muscle_in");
-    // s.addPair(4, 12, "muscle_in");
-    // s.addPair(5, 12, "muscle_in");
-    // s.addPair(6, 12, "muscle_in");
-    // s.addPair(7, 12, "muscle_in");
-    // s.addPair(8, 12, "muscle_in");
-    // s.addPair(9, 12, "muscle_in");
-    // s.addPair(10, 12, "muscle_in");
-    // s.addPair(11, 12, "muscle_in");
+    s.addPair(0, 12, "muscle_in");
+    s.addPair(1, 12, "muscle_in");
+    s.addPair(2, 12, "muscle_in");
+    s.addPair(3, 12, "muscle_in");
+    s.addPair(4, 12, "muscle_in");
+    s.addPair(5, 12, "muscle_in");
+    s.addPair(6, 12, "muscle_in");
+    s.addPair(7, 12, "muscle_in");
+    s.addPair(8, 12, "muscle_in");
+    s.addPair(9, 12, "muscle_in");
+    s.addPair(10, 12, "muscle_in");
+    s.addPair(11, 12, "muscle_in");
 
     // Payload Muscles cylinder
-    s.addPair(0, 13, "muscle_in");
-    s.addPair(1, 12, "muscle_in");
-    s.addPair(2, 13, "muscle_in");
-    s.addPair(3, 12, "muscle_in");
-    s.addPair(4, 13, "muscle_in");
-    s.addPair(5, 12, "muscle_in");
-    s.addPair(6, 13, "muscle_in");
-    s.addPair(7, 12, "muscle_in");
-    s.addPair(8, 13, "muscle_in");
-    s.addPair(9, 12, "muscle_in");
-    s.addPair(10, 13, "muscle_in");
-    s.addPair(11, 12, "muscle_in");
+    // s.addPair(0, 13, "muscle_in");
+    // s.addPair(1, 12, "muscle_in");
+    // s.addPair(2, 13, "muscle_in");
+    // s.addPair(3, 12, "muscle_in");
+    // s.addPair(4, 13, "muscle_in");
+    // s.addPair(5, 12, "muscle_in");
+    // s.addPair(6, 13, "muscle_in");
+    // s.addPair(7, 12, "muscle_in");
+    // s.addPair(8, 13, "muscle_in");
+    // s.addPair(9, 12, "muscle_in");
+    // s.addPair(10, 13, "muscle_in");
+    // s.addPair(11, 12, "muscle_in");
 
 }
 
@@ -255,7 +269,7 @@ void T6Model::setup(tgWorld& world)
     addNodes(s);
     addRods(s);
     addMuscles(s);
-    s.move(btVector3(0, 15.2, 0));
+    s.move(btVector3(0, 50.7, 0));
 
 
 

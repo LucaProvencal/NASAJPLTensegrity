@@ -49,10 +49,12 @@
  * @return 0
  */
 
-int stiffnessouter = 55;  // stiffness of outer muscles (N/dm)
-int stiffnessinner = 80;  // stiffness of inner muscles (N/dm)
-int pretensionouter = 40; // pretension of outer muscles (N)
-int pretensioninner = 55; // pretension of inner muscles (N)
+int stiffnessouter = 1921;  // stiffness of outer muscles (N/dm)
+int stiffnessinner = 2483;  // stiffness of inner muscles (N/dm)
+int pretensionouter = 82.69; // pretension of outer muscles (N)
+int pretensioninner = 55.45; // pretension of inner muscles (N)
+int dampingouter = 192.1; //damping of outer muscles (kg/s)
+int dampinginner = 248.3; //damping of inner muscles (kg/s)
 int main(int argc, char** argv)
 {
     std::cout << "AppSUPERball" << std::endl;
@@ -90,7 +92,7 @@ int main(int argc, char** argv)
 
 
     std::stringstream sstm;
-    sstm << "/media/sf_Shared_Tensegribuntu/adskjhfa/datalogs_" << stiffnessouter << "_" << stiffnessinner << "_" << pretensionouter << "_" << pretensioninner;
+    sstm << "/media/sf_Simulation_Data/datalogs_" << stiffnessouter << "_" << stiffnessinner << "_" << pretensionouter << "_" << pretensioninner << "_" << dampingouter << "_" << dampinginner;
     std::string log_filename = sstm.str();
 
 
@@ -100,11 +102,11 @@ int main(int argc, char** argv)
     myDataLogger->addSenseable(myModel);
 
     tgRodSensorInfo* myRodSensorInfo = new tgRodSensorInfo();
-    // tgSphereSensorInfo* mySphereSensorInfo = new tgSphereSensorInfo();
+    tgSphereSensorInfo* mySphereSensorInfo = new tgSphereSensorInfo();
     tgSpringCableActuatorSensorInfo* mySCASensorInfo = new tgSpringCableActuatorSensorInfo();
     myDataLogger->addSensorInfo(myRodSensorInfo);
     myDataLogger->addSensorInfo(mySCASensorInfo);
-    // myDataLogger->addSensorInfo(mySphereSensorInfo);
+    myDataLogger->addSensorInfo(mySphereSensorInfo);
     simulation.addDataManager(myDataLogger);
 
     // Run until the user stops

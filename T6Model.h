@@ -42,6 +42,8 @@ extern int stiffnessouter;
 extern int stiffnessinner;
 extern int pretensionouter;
 extern int pretensioninner;
+extern int dampinginner;
+extern int dampingouter;
 
 // Forward declarations
 class tgSpringCableActuator;
