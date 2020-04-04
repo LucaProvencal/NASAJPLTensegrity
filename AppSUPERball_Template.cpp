@@ -53,12 +53,12 @@
 char *import = getenv("STIFFNESS");
 // int stiffnessouter = atoi (import);
 
-int stiffnessouter = 2500;  // stiffness of outer muscles (N/dm)
-int stiffnessinner = 2500;  // stiffness of inner muscles (N/dm)
-double pretensionouter = 501/5.0; // pretension of outer muscles (N)
-double pretensioninner = 501/5.0; // pretension of inner muscles (N)
-int dampingouter = 2500*.1; // damping of outer muscles 
-int dampinginner = 2500*.1; // damping of inner muscles
+int stiffnessouter = STIFFNESSOUTER;  // stiffness of outer muscles (N/dm)
+int stiffnessinner = STIFFNESSINNER;  // stiffness of inner muscles (N/dm)
+double pretensionouter = PRETENSIONOUTER/5.0; // pretension of outer muscles (N)
+double pretensioninner = PRETENSIONINNER/5.0; // pretension of inner muscles (N)
+int dampingouter = DAMPINGOUTER; // damping of outer muscles 
+int dampinginner = DAMPINGINNER; // damping of inner muscles
 
 int main(int argc, char** argv)
 {

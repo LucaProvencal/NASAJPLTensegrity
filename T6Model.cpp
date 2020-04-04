@@ -82,7 +82,7 @@ namespace
     } c =
    {
      4.5,    // density (kg / length^3)
-     0.015875,     // radius (length)
+     0.03175,     // radius of rod (length) new 1/4th is .03175, old 1/8th was .015875
      stiffnessouter,   // stiffness of outer muscles (kg / sec^2 = N/m = .1N/dm)
      stiffnessinner,    // stiffness of inner muscles (kg/sec^2)
      dampingouter,    // damping of outer muscles (kg / sec)
@@ -269,7 +269,7 @@ void T6Model::setup(tgWorld& world)
     addNodes(s);
     addRods(s);
     addMuscles(s);
-    s.move(btVector3(0, 50.7, 0));
+    s.move(btVector3(0, 50.7, 0)); //height earth terminal
 
 
 
