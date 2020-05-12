@@ -53,10 +53,10 @@
 char *import = getenv("STIFFNESS");
 // int stiffnessouter = atoi (import);
 
-int stiffnessouter = 1921;  // stiffness of outer muscles (N/m) definitely N/m
-int stiffnessinner = 2483;  // stiffness of inner muscles (N/m)
-int pretensionouter = 82.695; // pretension of outer muscles (N)
-int pretensioninner = 55.457; // pretension of inner muscles (N)
+int stiffnessouter = STIFFNESSOUTER;  // stiffness of outer muscles (N/dm)
+int stiffnessinner = STIFFNESSINNER;  // stiffness of inner muscles (N/dm)
+int pretensionouter = PRETENSIONOUTER; // pretension of outer muscles (N)
+int pretensioninner = PRETENSIONINNER; // pretension of inner muscles (N)
 int main(int argc, char** argv)
 {
     std::cout << import << std::endl;
@@ -73,8 +73,8 @@ int main(int argc, char** argv)
     // the world will delete this
     tgBoxGround* ground = new tgBoxGround(groundConfig);
 
-    const double titan_gravity = 98.1;
-    const tgWorld::Config config(titan_gravity); // gravity, dm/sec^2  Use this to adjust length scale of world.
+    const double titan_gravity = 98.10;
+    const tgWorld::Config config(titan_gravity); // gravity, cm/sec^2  Use this to adjust length scale of world.
         // Note, by changing the setting below from 981 to 98.1, we've
         // scaled the world length scale to decimeters not cm.
     tgWorld world(config, ground);

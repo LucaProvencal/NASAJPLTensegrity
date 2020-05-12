@@ -70,6 +70,8 @@ namespace
         double payload_h;
         double density_pay;
         double radius_pay;
+        double density_cyl;
+        double radius_cyl;
         double friction;
         double rollFriction;
         double restitution;
@@ -94,7 +96,10 @@ namespace
      1.212205,        //payload density (kg/length^3)
      .3302,        //payload radius (length) // ACTUAL DIAMETER OF //.3302
 
-     1.0,      // friction (unitless)
+     .40,        //payload density (kg/length^3)
+     2,
+
+     5,      // friction (unitless)
      0.1,     // rollFriction (unitless)
      0.0,       // restitution (?)
      pretensionouter,        // pretension OUTER (N)
@@ -122,44 +127,44 @@ void T6Model::addNodes(tgStructure& s)
 {
     const double half_length = c.rod_length / 2;
 
-    // Nodes for struts
-    // s.addNode(-1.567545294*cos((58.28713733 + 25)*PI/180),  -1.567545294*sin((58.28713733 + 25)*PI/180), 0);            // 0
-    // s.addNode(-1.567545294*cos((58.28713733 + 25)*PI/180),   1.567545294*sin((58.28713733 + 25)*PI/180), 0);           // 1
-    // s.addNode( 1.567545294*cos((58.28713733 + 25)*PI/180),  -1.567545294*sin((58.28713733 + 25)*PI/180), 0);            // 0
-    // s.addNode( 1.567545294*cos((58.28713733 + 25)*PI/180),   1.567545294*sin((58.28713733 + 25)*PI/180), 0);
-    // s.addNode(-c.rod_space,    -half_length, 0); // 4
-    // s.addNode(-c.rod_space,     half_length, 0); // 5
-    // s.addNode( c.rod_space,    -half_length, 0); // 6
-    // s.addNode( c.rod_space,     half_length, 0); // 7
-    // s.addNode(0,           -c.rod_space,   -half_length); // 4
-    // s.addNode(0,           -c.rod_space,    half_length); // 5
-    // s.addNode(0,            c.rod_space,   -half_length); // 6
-    // s.addNode(0,            c.rod_space,    half_length); // 7
-    // s.addNode(-half_length, 0,            c.rod_space);   // 8
-    // s.addNode( half_length, 0,            c.rod_space);   // 9
-    // s.addNode(-half_length, 0,           -c.rod_space);   // 10
-    // s.addNode( half_length, 0,           -c.rod_space);   // 11
+    // Coordinates for parallel rod landing
+    s.addNode(-c.rod_space,    -half_length, 0); // 4
+    s.addNode(-c.rod_space,     half_length, 0); // 5
+    s.addNode( c.rod_space,    -half_length, 0); // 6
+    s.addNode( c.rod_space,     half_length, 0); // 7
+    s.addNode(0,           -c.rod_space,   -half_length); // 4
+    s.addNode(0,           -c.rod_space,    half_length); // 5
+    s.addNode(0,            c.rod_space,   -half_length); // 6
+    s.addNode(0,            c.rod_space,    half_length); // 7
+    s.addNode(-half_length, 0,            c.rod_space);   // 8
+    s.addNode( half_length, 0,            c.rod_space);   // 9
+    s.addNode(-half_length, 0,           -c.rod_space);   // 10
+    s.addNode( half_length, 0,           -c.rod_space);   // 11
            // 0
 
-     //Coordinates for triangle landing
-     s.addNode((-5.001*.254),  (-2.021*.254), (1.237*.254));            // 0
-     s.addNode((3.572*.254),  (4.042*.254),  (1.237*.254));            // 1
-     s.addNode((-3.572*.254),  (-4.042*.254), (-1.237*.254));            // 2
-     s.addNode( (5.001*.254),   (2.021*.254), (-1.237*.254));            // 3
+     // Coordinates for triangle landing
+     // s.addNode((-5.001*.254),  (-2.021*.254), (1.237*.254));            // 0
+     // s.addNode((3.572*.254),  (4.042*.254),  (1.237*.254));            // 1
+     // s.addNode((-3.572*.254),  (-4.042*.254), (-1.237*.254));            // 2
+     // s.addNode( (5.001*.254),   (2.021*.254), (-1.237*.254));            // 3
+     //
+     // s.addNode((-3.572*.254), (2.021*.254), (-3.712*.254));   // 8
+     // s.addNode((.7144*.254), (-4.042*.254), (3.712*.254));   // 9
+     // s.addNode((-.7144*.254), (4.042*.254), (-3.712*.254));   // 10
+     // s.addNode((3.572*.254), (-2.021*.254),  (3.712*.254));   // 11
+     //
+     // s.addNode((-1.429*.254),  (2.021*.254),  (4.950*.254)); // 6
+     // s.addNode((2.858*.254),  (-4.042*.254),  (-2.475*.254)); // 7
+     // s.addNode((-2.858*.254),   (4.042*.254),  (2.475*.254)); // 4
+     // s.addNode((1.429*.254), (-2.021*.254),    (-4.950*.254)); // 5
 
-     s.addNode((-3.572*.254), (2.021*.254), (-3.712*.254));   // 8
-     s.addNode((.7144*.254), (-4.042*.254), (3.712*.254));   // 9
-     s.addNode((-.7144*.254), (4.042*.254), (-3.712*.254));   // 10
-     s.addNode((3.572*.254), (-2.021*.254),  (3.712*.254));   // 11
 
-     s.addNode((-1.429*.254),  (2.021*.254),  (4.950*.254)); // 6
-     s.addNode((2.858*.254),  (-4.042*.254),  (-2.475*.254)); // 7
-     s.addNode((-2.858*.254),   (4.042*.254),  (2.475*.254)); // 4
-     s.addNode((1.429*.254), (-2.021*.254),    (-4.950*.254)); // 5
+    // Node SPHERE for payload
+     s.addNode(0,0,0, "payload_sphere"); // 12
 
-
-    //Node SPHERE for payload
-    s.addNode(0,0,0, "payload_sphere"); // 12
+    // Nodes for cylinder squishing
+     // s.addNode(0,1.5,.02);
+     // s.addNode(0,2.0,.02);
 
     // s.addNode(0,  c.payload_h, 0);  // 12 cylinder payload
     // s.addNode(0,  -c.payload_h, 0);   // 13 cylinder payload
@@ -205,7 +210,7 @@ void T6Model::addMuscles(tgStructure& s)
     s.addPair(3, 9,  "muscle");
     s.addPair(3, 11, "muscle");
     //
-    // // s.addPair(4, 2,  "muscle"); // is this extra?
+    // s.addPair(4, 2,  "muscle"); // is this extra?
     s.addPair(4, 10, "muscle");
     s.addPair(4, 11, "muscle");
 
@@ -254,7 +259,7 @@ void T6Model::setup(tgWorld& world)
     const tgRod::Config rodConfig(c.radius, c.density, c.friction,
 				c.rollFriction, c.restitution);
 
-    const tgRod::Config payConfig(c.radius_pay, c.density_pay, c.friction,
+    const tgRod::Config payConfig(c.radius_cyl, c.density_cyl, c.friction,
                 c.rollFriction, c.restitution);
 
     const tgSphere::Config sphereConfig(c.radius_pay, c.density_pay, c.friction,
@@ -269,10 +274,15 @@ void T6Model::setup(tgWorld& world)
 
     // Start creating the structure
     tgStructure s;
+    // tgStructure y;
     addNodes(s);
     addRods(s);
     addMuscles(s);
+    // addNodes(y);
+    // addRods(y);
+    // addMuscles(y);
     s.move(btVector3(0, 50.7, 0));
+    // y.move(btVector3(0, 10, 0));
 
 
 
