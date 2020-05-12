@@ -1,4 +1,4 @@
-# NASAJPLTensegrity
+# NASAJPLTensegrity Spring 2020 Capstone NTRTsim Procedure
 
 This repository is an adaptation of an existing rendition of the NASA Tensegrity Robotics Toolkit (NTRTSim) by developer "kmorse". The included files are to be compiled by NTRTsim, creating a simulation of a 6-bar, 24-tensile member tensegrity structure with a central payload. The simulation produces both visual and numeric output (position, rotation, tension, etc) associated with each tensile member and compression member, as well as the central payload. Instructions to run the simulation and obtain the visual and numeric output data are as follows:
 
