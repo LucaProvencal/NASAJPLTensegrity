@@ -12,7 +12,9 @@ Optional but highly recommended: install Oh My Zsh and Atom (or another text edi
 
 3. Add "NASAJPLTensegrity" as a subdirectory in the ```CMakeLists.txt``` file in ```~/NTRTsim/src/dev```
 
-4. That is most of the setup. To build, navigate to ```~/NTRTsim/bin/``` and run ```./build.sh```. Do this whenever source code is changed.
+4. That is most of the setup. The actual inputs to the tensegrity structure can be found in ```T6Model.cpp```. Update this code to update the structure. Things like length of the rods, orientation of the rods, position of the rods, initial drop height, material properties, etc can all be changed in here.
+
+To build, navigate to ```~/NTRTsim/bin/``` and run ```./build.sh```. Do this whenever source code is changed.
 
 5. To run, navigate to ```~/NTRTsim/build/dev/NASAJPLTensegrity``` and run ```./AppNASA_JPL_Tensegrity```.
 
